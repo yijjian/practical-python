@@ -46,22 +46,32 @@ def make_report(portfolio, prices):
         report.append((stk['name'],stk['shares'],prices[stk['name']],prices[stk['name']] - stk['price']))
     return report
 
-    
+def print_report(report):
+    headers = ('Name', 'Shares', 'Price', 'Change')
+    print('%10s %10s %10s %10s' % headers)
+    print(('-' * 10 + ' ') * len(headers))
+    for row in report:
+        print('%10s %10d %10.2f %10.2f' % row)
+
+def portfolio_report(portfolio_filename, prices_filename):
+    portfolio = read_portfolio(portfolio_filename)
+    prices = read_prices(prices_filename)
+    report = make_report(portfolio, prices)
+    print_report(report)
+
+
+files = ['Data/portfolio.csv', 'Data/portfolio2.csv']
+for name in files:
+    print(f'{name:-^43s}')
+    portfolio_report(name, 'Data/prices.csv')
+    print()
+'''
 portfolio = read_portfolio('Data/portfolio.csv')
 prices = read_prices('Data/prices.csv')
 report = make_report(portfolio, prices)
-
-print('{:>16} {:>16} {:>16} {:>16}'.format('Name','Shares','Price','Change'))
-value = ' -'
-print(f'{value * 8} {value * 8} {value * 8} {value * 8}')
-for name, shares, price, change in report:
-    price = '$' + str('%0.2f'% price)
-    print(f'{name:>16s} {shares:>16d} {price:>16} {change:>16.2f}')
-
+print_report(report)
 '''
-print('{:>16} {:>16} {:>16} {:>16}'.format('Name','Shares','Price','Change'))
-value = ' -'
-print(f'{value * 8} {value * 8} {value * 8} {value * 8}')
-for stk in portfolio:
-    print('{name:>16} {shares:>16} {price:>16.2f} {change:>16.2f}'.format_map(stk))
-'''
+
+
+
+
