@@ -34,3 +34,5 @@ print(portfolio)
 >>>>>>> parent of 19bdf99... Update fileparse.py
 =======
 >>>>>>> parent of 19bdf99... Update fileparse.py
+=======
+>>>>>>> parent of 19bdf99... Update fileparse.py
