@@ -26,6 +26,9 @@ portfolio = parse_csv('Data/portfolio.csv')
 print(portfolio)
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of 19bdf99... Update fileparse.py
+=======
 >>>>>>> parent of 19bdf99... Update fileparse.py
 =======
 >>>>>>> parent of 19bdf99... Update fileparse.py
