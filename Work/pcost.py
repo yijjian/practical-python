@@ -12,12 +12,13 @@ def portfolio_cost(filename):
         total += int(row['shares']) * float(row['price'])
     return total
 
-if len(sys.argv) == 2:
-    filename = sys.argv[1]
-else:
-    filename = 'Data/portfoliodate.csv'
+def main(argv):
+    if len(sys.argv) == 2:
+        filename = sys.argv[1]
+    else:
+        filename = 'Data/portfoliodate.csv'
+    cost = portfolio_cost(filename)
+    print('Total cost:', cost)
 
-cost = portfolio_cost(filename)
-print('Total cost:', cost)
-
-
+if __name__ == '__main__':
+    main(sys.argv)
