@@ -1,7 +1,7 @@
 # report.py
 #
 # Exercise 2.4
-import csv
+import csv,sys
 from fileparse import parse_csv
 def portfolio_cost(filename):
     total_cost = 0
@@ -17,11 +17,11 @@ def portfolio_cost(filename):
     return total_cost
 
 def read_portfolio(filename):
-    portfolio = parse_csv(filename, has_headers=True)
+    portfolio = parse_csv(filename, has_headers=True, types=[str, int, float])
     return portfolio
 
 def read_prices(filename):
-    prices = parse_csv(filename, has_headers=False)
+    prices = parse_csv(filename, has_headers=False, types=[str,float])
     return prices
 
 
@@ -45,14 +45,16 @@ def portfolio_report(portfolio_filename, prices_filename):
     report = make_report(portfolio, prices)
     print_report(report)
 
+def main(argv):
+    portfolio = read_portfolio('Data/portfolio.csv')
+    prices = read_prices('Data/prices.csv')
+    report = make_report(portfolio, prices)
+    print_report(report)
 
+if __name__ == '__main__':
+    main(sys.argv)
+    
 
-'''
-portfolio = read_portfolio('Data/portfolio.csv')
-prices = read_prices('Data/prices.csv')
-report = make_report(portfolio, prices)
-print_report(report)
-'''
 
 
 
