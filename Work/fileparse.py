@@ -45,16 +45,17 @@ def parse_csv(filename, select=None, types=None, has_headers=True, delimiter=Non
         else:
             if select and has_headers == False:
                 raise RuntimeError('select argument requires column headers')
-            records = []
+            records = {}
             for i, row in enumerate(rows, start=1):
                 if types:
                     try:
                         row = tuple([func(val) for func, val in zip(types, row)])
+                        name, price = row
                     except ValueError as e:
                         pass
                 if not row:    # Skip rows with no data
                     continue
-                records.append(row)
+                records[name] = price
             
 
     return records
