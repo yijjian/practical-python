@@ -18,10 +18,11 @@ def parse_csv(filename, select=None, types=None, has_headers=True, delimiter=Non
 
             # Read the file headers
             headers = next(rows)
+            print(headers)
 
             if select:
                 indices = [headers.index(colname) for colname in select]
-                headers = select
+                headers = indices
             else:
                 indices = []
 
@@ -29,20 +30,29 @@ def parse_csv(filename, select=None, types=None, has_headers=True, delimiter=Non
             records = []
             for row in rows:
                 if types:
-                    row = [func(val) for func, val in zip(types, row)]
+                    try:
+                        row = [func(val) for func, val in zip(types, row)]
+                    except ValueError as e:
+                        pass
                 if not row:    # Skip rows with no data
                     continue
                 if indices:
                     row = [row[index] for index in indices]
+                    print(row)
                     
                 record = dict(zip(headers, row))
                 records.append(record)
 
         else:
+            if select and has_headers == False:
+                raise RuntimeError('select argument requires column headers')
             records = []
-            for row in rows:
+            for i, row in enumerate(rows, start=1):
                 if types:
-                    row = tuple([func(val) for func, val in zip(types, row)])
+                    try:
+                        row = tuple([func(val) for func, val in zip(types, row)])
+                    except ValueError as e:
+                        pass
                 if not row:    # Skip rows with no data
                     continue
                 records.append(row)
