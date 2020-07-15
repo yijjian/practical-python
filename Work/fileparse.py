@@ -18,7 +18,6 @@ def parse_csv(filename, select=None, types=None, has_headers=True, delimiter=Non
 
             # Read the file headers
             headers = next(rows)
-            print(headers)
 
             if select:
                 indices = [headers.index(colname) for colname in select]
