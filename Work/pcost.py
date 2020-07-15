@@ -3,23 +3,13 @@
 # Exercise 1.27
 import sys
 import csv
+from report import read_portfolio
 
 def portfolio_cost(filename):
-    f = open(filename, 'rt')
-    rows = csv.reader(f)
-    headers = next(rows)
-    print(headers)
+    portfolio = read_portfolio(filename)
     total = 0
-    for num, row in enumerate(rows, start=1):
-        record = dict(zip(headers, row))
-        print(row)
-        try:
-            nshares = int(record['shares'])
-            price = float(record['price'])
-            total += nshares * price
-        except ValueError:
-            print(f'Row {num}: Bad row: {row}')
-    f.close
+    for row in portfolio:
+        total += int(row['shares']) * float(row['price'])
     return total
 
 if len(sys.argv) == 2:
