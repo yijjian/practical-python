@@ -2,6 +2,7 @@
 
 import fileparse
 import tableformat
+from stock import Stock
 
 def read_portfolio(filename):
     '''
@@ -9,7 +10,12 @@ def read_portfolio(filename):
     name, shares, and price.
     '''
     with open(filename) as lines:
-        return fileparse.parse_csv(lines, select=['name','shares','price'], types=[str,int,float])
+        portdicts = fileparse.parse_csv(lines, 
+                                        select=['name','shares','price'], 
+                                        types=[str,int,float])
+
+    portfolio = [ Stock(d['name'], d['shares'], d['price']) for d in portdicts ]
+    return portfolio
 
 def read_prices(filename):
     '''
@@ -40,7 +46,7 @@ def print_report(reportdata, formatter):
         rowdata = [ name, str(shares), f'{price:0.2f}', f'{change:0.2f}' ]
         formatter.row(rowdata)
 
-def portfolio_report(portfoliofile, pricefile):        
+def portfolio_report(portfoliofile, pricefile, fmt='txt'):        
     '''
     Make a stock report given portfolio and price data files.
     '''
@@ -52,7 +58,7 @@ def portfolio_report(portfoliofile, pricefile):
     report = make_report_data(portfolio, prices)
 
     # Print it out
-    formatter = tableformat.HTMLTableFormatter()
+    formatter = tableformat.create_formatter(fmt)
     print_report(report, formatter)
 
 def main(args):
