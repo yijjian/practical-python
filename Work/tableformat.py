@@ -16,7 +16,7 @@ class TextTableFormatter(TableFormatter):
 
     def row(self, rowdata):
         for d in rowdata:
-            print(f'{d:>10s}', end=' ')
+            print(f'{d:>10}', end=' ')
         print()
 
 
@@ -45,6 +45,10 @@ class HTMLTableFormatter(TableFormatter):
         print('</th><th>'.join(rowdata), end='')
         print('</th></tr>')
 
+class FormatError(Exception):
+    pass
+
+
 def create_formatter(name):
     if name == 'txt':
         formatter = TextTableFormatter()
@@ -53,7 +57,14 @@ def create_formatter(name):
     elif name == 'html':
         formatter = HTMLTableFormatter()
     else:
-        raise RuntimeError(f'Unknow format {name}')
+        raise RuntimeError(f'Unknow table format %s' % name)
 
     if formatter:
         return formatter
+
+def print_table(portfolio, columns, formatter):
+    formatter.headings(columns)
+    for stk in portfolio:
+        rowdata = [getattr(stk, col) for col in columns]
+        formatter.row(rowdata)
+    
